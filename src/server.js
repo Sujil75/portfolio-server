@@ -4,7 +4,9 @@ const dns = require('dns');
 const connectDB = require('./config/dbConnection');
 const { start } = require('repl');
 
-dns.setServers(["0.0.0.0", "1.1.1.1"]);
+const DNS_PORT = process.env.DNS_PORT.split(',').map(s => s.trim());
+
+dns.setServers(DNS_PORT);
 
 const PORT = process.env.PORT;
 
