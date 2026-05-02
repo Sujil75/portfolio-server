@@ -3,18 +3,18 @@ const skillsServices = require('../service/skills.services');
 
 const router = express.Router();
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     try {
-        const skill = skillsServices.createSkills(req.body);
+        const skill = await skillsServices.createSkills(req.body);
         res.json(skill);
     }catch(err) {
         res.status(500).send(err.message);
     };
 });
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
     try {
-        const skill = skillsServices.getSkills();
+        const skill = await skillsServices.getSkills();
         res.json(skill);
     }catch(err) {
         res.status(500).send(err.message);

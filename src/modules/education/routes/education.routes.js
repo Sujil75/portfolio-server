@@ -1,22 +1,22 @@
 const express = require('express');
-const userServices = require('../service/user.services');
+const eduServices = require('../service/education.services');
 
 const router = express.Router();
 
 router.post('/', async (req, res) => {
     try {
-        const user = await userServices.createUser(req.body);
-        res.json(user);
-    } catch(err) {
+        const education = await eduServices.createEdu(req.body);
+        res.json(education);
+    }catch(err) {
         res.status(500).send(err.message);
     };
 });
 
 router.get('/', async (req, res) => {
     try {
-        const user = await userServices.getUser();
-        res.json(user);
-    } catch(err) {
+        const education = await eduServices.getEdu();
+        res.json(education);
+    }catch(err) {
         res.status(500).send(err.message);
     };
 });
