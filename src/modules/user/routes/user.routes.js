@@ -12,11 +12,11 @@ router.post('/', async (req, res) => {
     };
 });
 
-router.get('/', async (req, res) => {
+router.put('/', async (req, res) => {
     try {
-        const user = await userServices.getUser();
+        const user = await userServices.updateUser(req.body);
         res.json(user);
-    } catch(err) {
+    }catch(err) {
         res.status(500).send(err.message);
     };
 });

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const userSchema = mongoose.Schema({
+const skillSchema = mongoose.Schema({
     skill_name: String,
     skill_image: {
         type: String,
@@ -9,6 +9,6 @@ const userSchema = mongoose.Schema({
     skill_progress: Number,
 });
 
-const userModel = mongoose.model('Skills', userSchema);
+const skillModel = mongoose.model('Skills', skillSchema);
 
-module.exports = userModel;
+module.exports = skillModel;

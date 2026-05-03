@@ -10,7 +10,15 @@ const userSchema = mongoose.Schema({
     resume: {
         type: String,
         match: [/^(https?:\/\/[^\s$.?#].[^\s]*)$/, 'Please use a valid URL'],
-    }
+    },
+    user_image: {
+        type: String,
+        match: [/^(https?:\/\/[^\s$.?#].[^\s]*)$/, 'Please use a valid URL'],
+    },
+    skills: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Skills",
+    }]
 });
 
 const userModel = mongoose.model('User', userSchema);

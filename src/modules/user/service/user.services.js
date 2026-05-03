@@ -1,14 +1,19 @@
+// for admin usage only
 const User = require('../model/user.model');
 
 const createUser = async data => {
     return await User.create(data);
 };
 
-const getUser = async () => {
-    return await User.find();
-}
+const updateUser = async (data) => {
+    return await User.findOneAndUpdate(
+        {},
+        data,
+        {new: true},
+    );
+};
 
 module.exports = {
     createUser,
-    getUser,
+    updateUser,
 };

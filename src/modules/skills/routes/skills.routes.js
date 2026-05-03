@@ -12,10 +12,19 @@ router.post('/', async (req, res) => {
     };
 });
 
-router.get('/', async (req, res) => {
+router.put('/:id', async (req, res) => {
     try {
-        const skill = await skillsServices.getSkills();
+        const skill = await skillsServices.updateSkill(req.params.id, req.body);
         res.json(skill);
+    }catch(err) {
+        res.status(500).send(err.message);
+    };
+});
+
+router.delete('/:id', async (req, res) => {
+    try {
+        const skill = await skillsServices.deleteSkill(req.params.is);
+        res.json({message: "Skill Deleted"});
     }catch(err) {
         res.status(500).send(err.message);
     };
