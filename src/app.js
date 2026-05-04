@@ -19,4 +19,10 @@ app.use(express.json());
 // public api
 app.use('/api/portfolio', portfolioRoutes);
 
+// admin api
+app.use(authMiddleware);
+app.use('/api/admin/user', userRoutes);
+app.use('/api/admin/skills', skillRoutes);
+app.use('/api/admin/education', educationRoutes)
+
 module.exports = app;

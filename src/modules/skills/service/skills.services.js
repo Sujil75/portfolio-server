@@ -1,11 +1,15 @@
 const Skills = require('../model/skills.model')
+const User = require('../../user/model/user.model')
 
 const createSkills = async data => {
-    return await Skills.create(data);
-};
+    const skill = await Skills.create(data);
 
-const getSkills = async () => {
-    return await Skills.find();
+    await User.findOneAndUpdate(
+        {},
+        {$push: {skills: skill._id}},
+    );
+
+    return skill;
 };
 
 const updateSkill = async (id, data) => {
@@ -22,7 +26,6 @@ const deleteSkill = async id => {
 
 module.exports = {
     createSkills,
-    getSkills,
     updateSkill,
     deleteSkill,
 };

@@ -12,13 +12,4 @@ router.post('/', async (req, res) => {
     };
 });
 
-router.get('/', async (req, res) => {
-    try {
-        const education = await eduServices.getEdu();
-        res.json(education);
-    }catch(err) {
-        res.status(500).send(err.message);
-    };
-});
-
 module.exports = router;

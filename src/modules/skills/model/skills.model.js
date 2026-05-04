@@ -9,6 +9,6 @@ const skillSchema = mongoose.Schema({
     skill_progress: Number,
 });
 
-const skillModel = mongoose.model('Skills', skillSchema);
+const skillModel = mongoose.model('skills', skillSchema);
 
 module.exports = skillModel;
