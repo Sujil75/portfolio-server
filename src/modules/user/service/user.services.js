@@ -1,16 +1,17 @@
-// for admin usage only
 const User = require('../model/user.model');
 
-const createUser = async data => {
+const createUser = async (data) => {
     return await User.create(data);
 };
 
 const updateUser = async (data) => {
-    return await User.findOneAndUpdate(
-        {},
-        data,
-        {new: true},
-    );
+    const user = await User.findOneAndUpdate({}, data, { new: true });
+
+    if (!user) {
+        throw new Error('User not found');
+    }
+
+    return user;
 };
 
 module.exports = {

@@ -1,6 +1,6 @@
 const express = require('express');
 
-const portfolioRoutes = require('./modules/portfolio/routes/portfolio.router');
+const portfolioRoutes = require('./modules/portfolio/routes/portfolio.routes');
 const userRoutes = require('./modules/user/routes/user.routes');
 const skillRoutes = require('./modules/skills/routes/skills.routes');
 const educationRoutes = require('./modules/education/routes/education.routes');
