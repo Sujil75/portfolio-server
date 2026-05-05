@@ -2,35 +2,46 @@ const Skills = require('../model/skills.model');
 const User = require('../../user/model/user.model');
 
 const createSkills = async (data) => {
-    // check if array
     const dataArray = Array.isArray(data) ? data : [data];
 
-    // normalize data
-    const names = dataArray.map(each => each.skill_name.toLowerCase());
+    // normalize
+    const normalized = dataArray.map(s => ({
+        ...s,
+        skill_name: s.skill_name.toLowerCase()
+    }));
 
-    // check duplicates
-    const unqNames = new Set(names);
-    if (unqNames.size !== dataArray.length) {
+    // check duplicates in input
+    const names = normalized.map(s => s.skill_name);
+    if (new Set(names).size !== names.length) {
         throw new Error("Duplicate skills in list");
-    };
+    }
 
     // check duplicates in DB
     const existingSkills = await Skills.find({
-        skill_name: {$in: names}
+        skill_name: { $in: names }
     });
 
-    if (existingSkills.length > 0) {
-        const existingNames = existingSkills.map(each => each.skill_name);
-        throw new Error(`Skills already exists: ${existingNames.join(', ')}`)
-    };
+    // remove already existing skills
+    const existingNames = new Set(
+        existingSkills.map(s => s.skill_name)
+    );
 
-    const createdSkills = await Skills.create(dataArray);
+    const filteredData = normalized.filter(
+        s => !existingNames.has(s.skill_name)
+    );
 
-    const skillsIds = createSkills.map(s => s._id);
+    if (filteredData.length === 0) {
+        throw new Error("All skills already exist");
+    }
+
+    // create only new ones
+    const createdSkills = await Skills.create(filteredData);
+
+    const skillsIds = createdSkills.map(s => s._id);
 
     await User.updateMany(
         {},
-        { $push: { skills: {$each: skillsIds} } },
+        { $push: { skills: { $each: skillsIds } } }
     );
 
     return createdSkills;
