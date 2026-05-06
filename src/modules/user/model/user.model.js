@@ -19,10 +19,10 @@ const userSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Skills",
     }],
-    // education: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "Education",
-    // }],
+    educations: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Education",
+    }],
 });
 
 const userModel = mongoose.model('User', userSchema);

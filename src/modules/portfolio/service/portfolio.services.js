@@ -3,6 +3,7 @@ const User = require('../../user/model/user.model');
 const getPortfolio = async () => {
     const user = await User.findOne()
         .populate('skills')
+        .populate('educations')
         .lean();
 
     if (!user) return null;
@@ -19,6 +20,7 @@ const getPortfolio = async () => {
         skills: (user.skills || [])/* .sort(
             (a, b) => b.skill_progress - a.skill_progress
         ) */,
+         educations: (user.educations || []),
     };
 };
 
