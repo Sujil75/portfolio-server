@@ -4,6 +4,9 @@ const eduSchema = mongoose.Schema({
     education_name: {
         type: String,
         required: true,
+        unique: true,
+        trim: true,
+        lowercase: true,
     },
     education_desc: String,
     education_certificate_img: {

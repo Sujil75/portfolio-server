@@ -1,7 +1,7 @@
 const Education = require('../model/education.model');
 const User = require('../../user/model/user.model');
 
-const createEdu = async data => {
+module.exports.createEdu = async data => {
     // get user data
     const dataArray = Array.isArray(data) ? data : [data];
 
@@ -46,6 +46,21 @@ const createEdu = async data => {
     return createdData;
 }
 
-module.exports = {
-    createEdu,
+module.exports.updateEdu = async (id, data) => {
+    const dataObj = await Education.findByIdAndUpdate(
+        id,
+        data,
+        {
+            new: true,
+            runValidators: true,
+        },
+    );
+
+    return `Updated Education: ${dataObj}`;
+};
+
+module.exports.deleteEdu = async id => {
+    await Education.findByIdAndDelete(id);
+
+    return `Education with ${id} has been deleted`;
 };
