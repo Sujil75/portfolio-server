@@ -47,7 +47,7 @@ module.exports.createEdu = async data => {
 }
 
 module.exports.updateEdu = async (id, data) => {
-    const dataObj = await Education.findByIdAndUpdate(
+    const updateEducation = await Education.findByIdAndUpdate(
         id,
         data,
         {
@@ -56,15 +56,15 @@ module.exports.updateEdu = async (id, data) => {
         },
     );
 
-    return dataObj;
+    if (!updateEducation) throw new Error(`No data found or empty`)
+
+    return updateEducation;
 };
 
 module.exports.deleteEdu = async id => {
     const deleteId = await Education.findByIdAndDelete(id);
 
-    if (!deleteId) throw new Error(`${id} not found`);
-
-    console.log(deleteId._id);
+    if (!deleteId) throw new Error(`No data found or empty`);
 
     await User.updateOne(
         {},
