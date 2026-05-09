@@ -56,11 +56,22 @@ module.exports.updateEdu = async (id, data) => {
         },
     );
 
-    return `Updated Education: ${dataObj}`;
+    return dataObj;
 };
 
 module.exports.deleteEdu = async id => {
-    await Education.findByIdAndDelete(id);
+    const deleteId = await Education.findByIdAndDelete(id);
 
-    return `Education with ${id} has been deleted`;
+    if (!deleteId) throw new Error(`${id} not found`);
+
+    console.log(deleteId._id);
+
+    await User.updateOne(
+        {},
+        {$pull: {
+            educations: id,
+        }},
+    );
+
+    return deleteId;
 };
