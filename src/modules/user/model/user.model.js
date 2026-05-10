@@ -23,6 +23,10 @@ const userSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Education",
     }],
+    projects: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Projects"
+    }]
 });
 
 const userModel = mongoose.model('User', userSchema);
