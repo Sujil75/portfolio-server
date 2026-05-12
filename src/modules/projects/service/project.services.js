@@ -7,23 +7,29 @@ module.exports.createProject = async data => {
     const normalizedData = dataArray.map(each => each.project_name.trim().toLowerCase());
 
     const existingData = await Projects.find({
-        projects_name: {$in: normalizedData.trim().toLowerCase()},
+        project_name: {$in: normalizedData},
     });
 
     const existingNames = new Set(
         existingData.map(each => (
-            each.projects_name.trim().toLowerCase()
+            each.project_name.trim().toLowerCase()
         ))
     );
 
-    const filteredData = dataArray.filter(each => (
-        !existingNames.has(each.project_name.trim().toLowerCase())
-    ));
+    const filteredData = dataArray.filter(each =>
+        !existingNames.has(
+            each.project_name.trim().toLowerCase()
+        )
+    );
 
     const formattedData = filteredData.map(each => ({
         ...each,
-        project_name: eacch.project_name.trim().toLowerCase(),
+        project_name: each.project_name.trim().toLowerCase(),
     }));
+
+    if (formattedData.length === 0) {
+        return [];
+    };
 
     const createdData = await Projects.create(formattedData);
 

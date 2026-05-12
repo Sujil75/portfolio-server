@@ -10,10 +10,10 @@ router.post('/', async (req, res) => {
     try {
         const project = await createProject(req.body);
     
-        if (!project) {
-            return res.status(400).send({
-                message: "Entered Data Error",
-                data: project,
+        if (!project || project.length === 0) {
+            return res.status(409).json({
+                message: "No new projects created. Projects may already exists",
+                data: [],
             });
         };
 
@@ -22,7 +22,10 @@ router.post('/', async (req, res) => {
             data: project,
         });
     }catch(err) {
-        res.status(500).send("Response error: ", err.message);
+        res.status(500).json({
+            message: "Response error",
+            data: err.message,
+        });
     };
 });
 
