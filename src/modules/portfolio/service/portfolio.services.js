@@ -4,6 +4,7 @@ const getPortfolio = async () => {
     const user = await User.findOne()
         .populate('skills')
         .populate('educations')
+        .populate('projects')
         .lean();
 
     if (!user) return null;
@@ -21,6 +22,7 @@ const getPortfolio = async () => {
             (a, b) => b.skill_progress - a.skill_progress
         ) */,
          educations: (user.educations || []),
+         projects: (user.projects || []),
     };
 };
 
