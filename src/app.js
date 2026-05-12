@@ -4,6 +4,7 @@ const portfolioRoutes = require('./modules/portfolio/routes/portfolio.routes');
 const userRoutes = require('./modules/user/routes/user.routes');
 const skillRoutes = require('./modules/skills/routes/skills.routes');
 const educationRoutes = require('./modules/education/routes/education.routes');
+const projectRoutes = require('./modules/projects/routes/project.routes');
 
 const authMiddleware = require('./middleware/auth.middleware');
 
@@ -23,6 +24,7 @@ app.use('/api/portfolio', portfolioRoutes);
 app.use(authMiddleware);
 app.use('/api/admin/user', userRoutes);
 app.use('/api/admin/skills', skillRoutes);
-app.use('/api/admin/education', educationRoutes)
+app.use('/api/admin/education', educationRoutes);
+app.use('/api/projects', projectRoutes);
 
 module.exports = app;
