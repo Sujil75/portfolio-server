@@ -63,3 +63,18 @@ module.exports.updateProject = async (id, data) => {
 
     return updateData;
 };
+
+module.exports.deleteProject = async id => {
+    if (!id) throw new Error("Invalid Project ID: ", id);
+
+    const deleteId = await Porjects.findByIdAndDelete(id);
+
+    await User.updateOne(
+        {},
+        {$pull: {
+            projects: id,
+        }},
+    );
+
+    return deleteId;
+};

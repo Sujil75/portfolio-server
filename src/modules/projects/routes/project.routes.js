@@ -5,6 +5,7 @@ const router = express.Router();
 const {
     createProject,
     updateProject,
+    deleteProject,
 } = Projects;
 
 router.post('/', async (req, res) => {
@@ -50,6 +51,22 @@ router.put('/:id', async (req, res) => {
             message: "Found Error",
             data: err.message,
         });
+    };
+});
+
+router.delete('/:id', async (req, res) => {
+    try {
+        const project = await deleteProject(req.params.id);
+
+        return res.status(200).json({
+            message: "Project Object Deleted Successfully",
+            data: project,
+        });
+    }catch (err) {
+        res.status(500).json({
+            message: "Data Error Found",
+            data: err.message,
+        })
     };
 });
 
