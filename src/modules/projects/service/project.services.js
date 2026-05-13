@@ -42,3 +42,24 @@ module.exports.createProject = async data => {
 
     return createdData;
 };
+
+module.exports.updateProject = async (id, data) => {
+    if (!id) throw new Error("Invalid ID: ", id);
+    if (!data) throw new Error ("Invalid Data Found");
+
+    const getData = await Projects.findById(id);
+
+    if (getData.project_name === data.project_name.trim().toLowerCase()) 
+        throw new Error(`Project data didn't update as project names are same`);
+
+    const updateData = await Projects.findByIdAndUpdate(
+        id,
+        data,
+        {
+            new: true,
+            runValidators: true,
+        }
+    );
+
+    return updateData;
+};

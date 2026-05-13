@@ -4,6 +4,7 @@ const Projects = require('../service/project.services');
 const router = express.Router();
 const {
     createProject,
+    updateProject,
 } = Projects;
 
 router.post('/', async (req, res) => {
@@ -24,6 +25,29 @@ router.post('/', async (req, res) => {
     }catch(err) {
         res.status(500).json({
             message: "Response error",
+            data: err.message,
+        });
+    };
+});
+
+router.put('/:id', async (req, res) => {
+    try {
+        const postData = await updateProject(req.params.id, req.body);
+
+        if (!postData) {
+            return res.status(401).json({
+                message: "No Post Data",
+                data: postData,
+            })
+        };
+
+        return res.status(200).json({
+            message: "Data updated successfully",
+            data: postData,
+        });
+    }catch (err) {
+        res.status(500).json({
+            message: "Found Error",
             data: err.message,
         });
     };
