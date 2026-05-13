@@ -4,7 +4,7 @@ const User = require('../../user/model/user.model');
 module.exports.createProject = async data => {
     const dataArray = Array.isArray(data) ? data : [data];
 
-    const normalizedData = dataArray.map(each => each.project_name.trim().toLowerCase());
+    const normalizedData = dataArray.map(each => each.project_name.trim());
 
     const existingData = await Projects.find({
         project_name: {$in: normalizedData},
@@ -12,19 +12,19 @@ module.exports.createProject = async data => {
 
     const existingNames = new Set(
         existingData.map(each => (
-            each.project_name.trim().toLowerCase()
+            each.project_name.trim()
         ))
     );
 
     const filteredData = dataArray.filter(each =>
         !existingNames.has(
-            each.project_name.trim().toLowerCase()
+            each.project_name.trim()
         )
     );
 
     const formattedData = filteredData.map(each => ({
         ...each,
-        project_name: each.project_name.trim().toLowerCase(),
+        project_name: each.project_name.trim(),
     }));
 
     if (formattedData.length === 0) {
@@ -49,7 +49,7 @@ module.exports.updateProject = async (id, data) => {
 
     const getData = await Projects.findById(id);
 
-    if (getData.project_name === data.project_name.trim().toLowerCase()) 
+    if (getData.project_name === data.project_name.trim()) 
         throw new Error(`Project data didn't update as project names are same`);
 
     const updateData = await Projects.findByIdAndUpdate(
@@ -67,7 +67,7 @@ module.exports.updateProject = async (id, data) => {
 module.exports.deleteProject = async id => {
     if (!id) throw new Error("Invalid Project ID: ", id);
 
-    const deleteId = await Porjects.findByIdAndDelete(id);
+    const deleteId = await Projects.findByIdAndDelete(id);
 
     await User.updateOne(
         {},
