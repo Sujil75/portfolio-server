@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const contactMeSchema = new mongoose.Schema({
+const contactme = new mongoose.Schema({
     contact_name: {
         type: String,
         trim: true,
@@ -24,6 +24,8 @@ const contactMeSchema = new mongoose.Schema({
         match: [/^(https?:\/\/[^\s$.?#].[^\s]*)$/, 'Please use a valid URL'],
         trim: true,
     }
+}, {
+    collection: "contacts", // to specific collection name
 });
 
-module.exports = mongoose.model("ContactMe", contactMeSchema);
+module.exports = mongoose.model("ContactMe", contactme, "contacts");
