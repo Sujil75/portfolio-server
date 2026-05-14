@@ -5,6 +5,7 @@ const getPortfolio = async () => {
         .populate('skills')
         .populate('educations')
         .populate('projects')
+        .populate('contact_me')
         .lean();
 
     if (!user) return null;
@@ -23,6 +24,7 @@ const getPortfolio = async () => {
         ) */,
          educations: (user.educations || []),
          projects: (user.projects || []),
+         contact_me: (user.contact_me || []),
     };
 };
 

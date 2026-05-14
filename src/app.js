@@ -24,7 +24,7 @@ app.use('/api/portfolio', portfolioRoutes);
 app.use(authMiddleware);
 app.use('/api/admin/user', userRoutes);
 app.use('/api/admin/skills', skillRoutes);
-app.use('/api/admin/education', educationRoutes);
+app.use('/api/admin/educations', educationRoutes);
 app.use('/api/admin/projects', projectRoutes);
 
 module.exports = app;

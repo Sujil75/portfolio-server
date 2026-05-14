@@ -26,7 +26,11 @@ const userSchema = mongoose.Schema({
     projects: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Projects"
-    }]
+    }],
+    contact_me: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "ContactMe",
+    }],
 });
 
 const userModel = mongoose.model('User', userSchema);
