@@ -52,7 +52,23 @@ const updateSkill = async (id, data) => {
 };
 
 const deleteSkill = async (id) => {
-    return await Skills.findByIdAndDelete(id);
+    if (!id) throw new Error("Invalid Id Found: ", id);
+
+    const existingData = await Skills.find();
+    const existingIds = existingData.map(each => each._id.toString());
+    
+    if (!existingIds.includes(id)) {
+        throw new Error(`Invalid ID: ${id} Found`);
+    };
+
+    await Skills.findByIdAndDelete(id);
+
+    await User.updateOne(
+        {},
+        {$pull: {skills: id}},
+    )
+
+    return `Data with ID: ${id}, deleted successfully`;
 };
 
 module.exports = {

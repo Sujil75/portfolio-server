@@ -61,6 +61,13 @@ module.exports.updateProject = async (id, data) => {
 
 module.exports.deleteProject = async id => {
     if (!id) throw new Error("Invalid Project ID: ", id);
+    
+        const existingData = await Projects.find();
+        const existingIds = existingData.map(each => each._id.toString());
+        
+        if (!existingIds.includes(id)) {
+            throw new Error(`Invalid ID: ${id} Found`);
+        };
 
     await Projects.findByIdAndDelete(id);
 

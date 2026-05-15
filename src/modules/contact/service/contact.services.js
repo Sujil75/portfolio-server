@@ -55,6 +55,13 @@ module.exports.updateContact = async (id, data) => {
 module.exports.deleteContact = async id => {
     if (!id) throw new Error("Invalid Id Found: ", id);
 
+    const existingData = await ContactMe.find();
+    const existingIds = existingData.map(each => each._id.toString());
+    
+    if (!existingIds.includes(id)) {
+        throw new Error(`Invalid ID: ${id} Found`);
+    };
+
     await ContactMe.findByIdAndDelete(id);
 
     await User.updateOne(
