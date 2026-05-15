@@ -46,6 +46,13 @@ module.exports.createProject = async data => {
 module.exports.updateProject = async (id, data) => {
     if (!id) throw new Error("Invalid ID: ", id);
     if (!data) throw new Error ("Invalid Data Found");
+    
+    const existingData = await Projects.find();
+    const existingIds = existingData.map(each => each._id.toString());
+    
+    if (!existingIds.includes(id)) {
+        throw new Error(`Invalid ID: ${id} Found`);
+    };
 
     const updateData = await Projects.findByIdAndUpdate(
         id,
@@ -55,6 +62,8 @@ module.exports.updateProject = async (id, data) => {
             runValidators: true,
         }
     );
+
+    if (!updateData) throw new Error("No Data Updated");
 
     return updateData;
 };

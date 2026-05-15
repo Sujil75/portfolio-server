@@ -48,7 +48,28 @@ const createSkills = async (data) => {
 };
 
 const updateSkill = async (id, data) => {
-    return await Skills.findByIdAndUpdate(id, data, { new: true });
+    if (!id) throw new Error("No ID Found");
+    if (!data) throw new Error("No Data Found");
+
+    const existingData = await Skills.find();
+    const existingIds = existingData.map(each => each._id.toString());
+    
+    if (!existingIds.includes(id)) {
+        throw new Error(`Invalid ID: ${id} Found`);
+    };
+
+    const updateData = await Skills.findByIdAndUpdate(
+        id, 
+        data, 
+        { 
+            new: true,
+            runValidators: true,
+         }
+    );
+
+    if (!updateData) throw new Error("No Data Updated");
+
+    return updateData;
 };
 
 const deleteSkill = async (id) => {

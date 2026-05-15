@@ -39,6 +39,13 @@ module.exports.createContact = async data => {
 module.exports.updateContact = async (id, data) => {
     if (!id) throw new Error("Invalid Id: ", id);
     if (!data) throw new Error("Invalid Data Received");
+    
+    const existingData = await ContactMe.find();
+    const existingIds = existingData.map(each => each._id.toString());
+    
+    if (!existingIds.includes(id)) {
+        throw new Error(`Invalid ID: ${id} Found`);
+    };
 
     const updateData = await ContactMe.findByIdAndUpdate(
         id,
@@ -48,6 +55,8 @@ module.exports.updateContact = async (id, data) => {
             runValidators: true,
         },
     );
+
+    if (!updateData) throw new Error("No Data Updated");
 
     return updateData;
 };

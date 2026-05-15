@@ -47,6 +47,16 @@ module.exports.createEdu = async data => {
 }
 
 module.exports.updateEdu = async (id, data) => {
+    if (!id) throw new Error("Invalid Id: ", id);
+    if (!data) throw new Error("Invalid Data Received");
+    
+    const existingData = await Education.find();
+    const existingIds = existingData.map(each => each._id.toString());
+    
+    if (!existingIds.includes(id)) {
+        throw new Error(`Invalid ID: ${id} Found`);
+    };
+
     const updateEducation = await Education.findByIdAndUpdate(
         id,
         data,
@@ -56,7 +66,7 @@ module.exports.updateEdu = async (id, data) => {
         },
     );
 
-    if (!updateEducation) throw new Error(`No data found or empty`)
+    if (!updateEducation) throw new Error("No Data Updated");
 
     return updateEducation;
 };

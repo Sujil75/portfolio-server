@@ -5,10 +5,12 @@ const createUser = async (data) => {
 };
 
 const updateUser = async (data) => {
+    if (!data) throw new Error("Invalid Data Found");
+
     const user = await User.findOneAndUpdate({}, data, { new: true });
 
     if (!user) {
-        throw new Error('User not found');
+        throw new Error('User not updated');
     }
 
     return user;
