@@ -47,11 +47,6 @@ module.exports.updateProject = async (id, data) => {
     if (!id) throw new Error("Invalid ID: ", id);
     if (!data) throw new Error ("Invalid Data Found");
 
-    const getData = await Projects.findById(id);
-
-    if (getData.project_name === data.project_name.trim()) 
-        throw new Error(`Project data didn't update as project names are same`);
-
     const updateData = await Projects.findByIdAndUpdate(
         id,
         data,
@@ -67,7 +62,7 @@ module.exports.updateProject = async (id, data) => {
 module.exports.deleteProject = async id => {
     if (!id) throw new Error("Invalid Project ID: ", id);
 
-    const deleteId = await Projects.findByIdAndDelete(id);
+    await Projects.findByIdAndDelete(id);
 
     await User.updateOne(
         {},
@@ -76,5 +71,5 @@ module.exports.deleteProject = async id => {
         }},
     );
 
-    return deleteId;
+    return `Data with ID: ${id}, deleted successfully`;
 };

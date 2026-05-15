@@ -35,3 +35,32 @@ module.exports.createContact = async data => {
 
     return createData;
 };
+
+module.exports.updateContact = async (id, data) => {
+    if (!id) throw new Error("Invalid Id: ", id);
+    if (!data) throw new Error("Invalid Data Received");
+
+    const updateData = await ContactMe.findByIdAndUpdate(
+        id,
+        data,
+        {
+            new: true,
+            runValidators: true,
+        },
+    );
+
+    return updateData;
+};
+
+module.exports.deleteContact = async id => {
+    if (!id) throw new Error("Invalid Id Found: ", id);
+
+    await ContactMe.findByIdAndDelete(id);
+
+    await User.updateOne(
+        {},
+        {$pull: {contact_me: id}},
+    )
+
+    return `Data with ID: ${id}, deleted successfully`;
+};

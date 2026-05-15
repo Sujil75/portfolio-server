@@ -58,10 +58,14 @@ router.delete('/:id', async (req, res) => {
     try {
         const project = await deleteProject(req.params.id);
 
-        return res.status(200).json({
-            message: "Project Object Deleted Successfully",
-            data: project,
-        });
+        if (!project) {
+            res.status(401).json({
+                message: "Data Deletion Failed",
+                data: project,
+            });
+        };
+
+        return res.status(200).send(project);
     }catch (err) {
         res.status(500).json({
             message: "Data Error Found",
