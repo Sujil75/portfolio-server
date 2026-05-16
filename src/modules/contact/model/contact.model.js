@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const contactme = new mongoose.Schema({
+const contactmeSchema = new mongoose.Schema({
     contact_name: {
         type: String,
         trim: true,
@@ -28,4 +28,4 @@ const contactme = new mongoose.Schema({
     collection: "contacts", // to specific collection name
 });
 
-module.exports = mongoose.model("ContactMe", contactme, "contacts");
+module.exports = mongoose.model("ContactMe", contactmeSchema, "contacts");
