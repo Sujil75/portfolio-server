@@ -16,6 +16,12 @@ const adminSchema = new mongoose.Schema({
         type: String,
         trim: true,
         required: true,
+    },
+    admin: {
+        type: Boolean,
+        required: true,
+        trim: true,
+        lowercase: true,
     }
 }, {
     timestamps: true,
