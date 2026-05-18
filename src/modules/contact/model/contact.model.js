@@ -25,6 +25,7 @@ const contactmeSchema = new mongoose.Schema({
         trim: true,
     }
 }, {
+    timestamps: true,
     collection: "contacts", // to specific collection name
 });
 

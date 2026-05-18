@@ -31,6 +31,8 @@ const userSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "ContactMe",
     }],
+}, {
+    timestamps: true,
 });
 
 const userModel = mongoose.model('User', userSchema);

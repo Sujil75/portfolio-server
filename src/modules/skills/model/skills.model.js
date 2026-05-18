@@ -19,6 +19,8 @@ const skillSchema = new mongoose.Schema({
         max: 100,
         default: 0,
     },
+}, {
+    timestamps: true,
 });
 
 module.exports = mongoose.model('Skills', skillSchema);

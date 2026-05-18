@@ -13,6 +13,8 @@ const eduSchema = new mongoose.Schema({
         type: String,
         match: [/^(https?:\/\/[^\s$.?#].[^\s]*)$/, 'Please use a valid URL']
     },
+}, {
+    timestamps: true,
 })
 
 const eduModel = mongoose.model('Education', eduSchema);
