@@ -22,9 +22,11 @@ app.use(express.json());
 // public api
 app.use('/api/portfolio', portfolioRoutes);
 
+// Admin Auth Routes
+app.use('/api/admin/auth', adminRoutes);
+
 // admin api
-app.use(authMiddleware);
-app.use('/api/admin', adminRoutes);
+app.use('/api/admin', authMiddleware);
 app.use('/api/admin/user', userRoutes);
 app.use('/api/admin/skills', skillRoutes);
 app.use('/api/admin/educations', educationRoutes);

@@ -35,7 +35,7 @@ module.exports.loginAdmin = async ({email, password}) => {
         "email": admin.email,
         "role": "admin",
     }, process.env.JWT_SECRET, {
-        "expiresIn": 10,
+        "expiresIn": '1d',
     });
 
     return {
