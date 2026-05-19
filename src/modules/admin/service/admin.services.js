@@ -43,3 +43,25 @@ module.exports.loginAdmin = async ({email, password}) => {
         admin,
     }
 };
+
+module.exports.updateAdminPassword = async ({oldPassword, newPassword}) => {
+    oldPassword = oldPassword.trim();
+    newPassword = newPassword.trim();
+
+    const adminData = await Admin.findOne();
+    
+    const isMatch = await bcrypt.compare(oldPassword, adminData.password);
+    
+    if (!isMatch) throw new Error("Old Password does not match");
+
+    const newHashedPassword = await bcrypt.hash(newPassword, 10);
+
+    const updatedAdmin = await Admin.updateOne(
+        {},
+        {$set: {
+            password: newHashedPassword,
+        }},
+    );
+
+    return "Admin Password Updated Successfully";
+};

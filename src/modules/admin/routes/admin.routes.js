@@ -6,6 +6,7 @@ const router = express.Router();
 const {
     registerAdmin,
     loginAdmin,
+    updateAdminPassword,
 } = adminService;
 
 router.post('/register', async (req, res) => {
@@ -51,6 +52,25 @@ router.post('/login', async (req, res) => {
             message: "Data Error Found",
             data: err.message,
         });
+    };
+});
+
+router.put('/pwd-chng', async (req, res) => {
+    try {
+        const admin = await updateAdminPassword(req.body);
+
+        if (!admin) {
+            res.status(401).json({
+                message: "Data did not Update",
+                data: admin,
+            });
+        };
+
+        res.status(200).json({
+            message: admin,
+        });
+    }catch(err) {
+        res.status(500).json({message: err.message});
     };
 });
 

@@ -72,7 +72,7 @@ module.exports.updateEdu = async (id, data) => {
 };
 
 module.exports.deleteEdu = async id => {
-    if (!deleteId) throw new Error(`No data found or empty`);
+    if (!id) throw new Error(`No data found or empty`);
     
     const existingData = await Education.find();
     const existingIds = existingData.map(each => each._id.toString());
@@ -80,6 +80,8 @@ module.exports.deleteEdu = async id => {
     if (!existingIds.includes(id)) {
         throw new Error(`Invalid ID: ${id} Found`);
     };
+
+    console.log(id);
 
 
     await Education.findByIdAndDelete(id);

@@ -51,11 +51,10 @@ router.delete('/:id', async (req,res) => {
         }
 
         res.json({
-            message: `Education with ${req.params.id} deleted successfully`,
-            data: education,
+            message: education,
         });
     }catch(err) {
-        res.status(500).send(`Error during deletion of education object with \n id: ${req.params.id} \n Error: `, err.message)
+        res.status(500).json({message: err.message});
     };
 });
 

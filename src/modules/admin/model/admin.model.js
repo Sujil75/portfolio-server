@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const adminSchema = new mongoose.Schema({
-    name: {
+    username: {
         type: String,
         trim: true,
         required: true,
@@ -11,6 +11,11 @@ const adminSchema = new mongoose.Schema({
         unique: true,
         trim: true,
         required: true,
+        lowercase: true,
+        match: [
+            /^\S+@\S+\.\S+$/,
+            'Please provide a valid email'
+        ]
     },
     password: {
         type: String,
