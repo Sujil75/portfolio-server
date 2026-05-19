@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 
 const portfolioRoutes = require('./modules/portfolio/routes/portfolio.routes');
 const userRoutes = require('./modules/user/routes/user.routes');
@@ -13,6 +14,7 @@ const authMiddleware = require('./middleware/auth.middleware');
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 // app.use(authMiddleware);
 
 // app.get('/', (req, res) => {
