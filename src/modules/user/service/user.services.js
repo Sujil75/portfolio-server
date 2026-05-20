@@ -1,6 +1,17 @@
 const User = require('../model/user.model');
 
 const createUser = async (data) => {
+    if (!data) throw new Error("Invalid Data Found");
+
+    const userExists = await User.find();
+    
+    if (userExists.length === 1) {
+        const error = new Error("Forbidden, no new user can be added");
+        error.status = 403;
+        
+        throw error;
+    };
+
     return await User.create(data);
 };
 

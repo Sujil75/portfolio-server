@@ -17,7 +17,10 @@ router.post('/', async (req, res) => {
             message: "User updated successfully",
         });
     } catch(err) {
-        res.status(500).send(err.message);
+        res.status(err.status || 500).json({
+            status: err.status,
+            message: err.message
+        });
     };
 });
 
