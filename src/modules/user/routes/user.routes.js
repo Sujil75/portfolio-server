@@ -6,7 +6,16 @@ const router = express.Router();
 router.post('/', async (req, res) => {
     try {
         const user = await userServices.createUser(req.body);
-        res.json(user);
+
+        if (!user) {
+            res.status(401).json({
+                message: "User Details not updated",
+            })
+        };
+
+        res.status(200).json({
+            message: "User updated successfully",
+        });
     } catch(err) {
         res.status(500).send(err.message);
     };
