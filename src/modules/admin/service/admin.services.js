@@ -3,6 +3,17 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 module.exports.registerAdmin = async data => {
+    if (!data) throw new Error("Invalid Data Found");
+
+    const adminExists = await Admin.find();
+
+    if (adminExists.length === 1) {
+        const err = new Error("Forbidden, no new admins can be created");
+        err.status = 403;
+
+        throw err;
+    };
+
     const existingAdmin = await Admin.findOne();
 
     if (!existingAdmin) throw new Error("Data Not Found");

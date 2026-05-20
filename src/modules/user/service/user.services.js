@@ -6,7 +6,7 @@ const createUser = async (data) => {
     const userExists = await User.find();
     
     if (userExists.length === 1) {
-        const error = new Error("Forbidden, no new user can be added");
+        const error = new Error("Forbidden, no new users can be added");
         error.status = 403;
         
         throw error;

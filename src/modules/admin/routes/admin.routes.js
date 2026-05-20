@@ -21,13 +21,12 @@ router.post('/register', async (req, res) => {
         };
 
         res.status(201).json({
-            message: "Admin Created Successfully",
-            data: admin,
+            message: "Admin Created Successfully"
         });
     }catch (err) {
-        res.status(500).json({
-            message: "Data Error Found",
-            data: err.message,
+        res.status(err.status || 500).json({
+            status: err.status,
+            message: err.message,
         });
     };
 });

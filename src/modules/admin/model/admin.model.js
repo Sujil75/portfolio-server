@@ -4,7 +4,8 @@ const adminSchema = new mongoose.Schema({
     username: {
         type: String,
         trim: true,
-        required: true,
+        sparse: true,
+        unique: true,
     },
     email: {
         type: String,
