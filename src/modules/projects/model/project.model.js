@@ -27,7 +27,7 @@ const projectsSchema = new mongoose.Schema({
     },
     project_stacks: [{
         type: String,
-        lowercase: true,
+        // lowercase: true,
         trim: true,
         minlength: 1,
         maxlength: 30,
