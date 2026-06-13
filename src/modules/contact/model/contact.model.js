@@ -11,9 +11,6 @@ const contactmeSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
-    contact_number: {
-        type: Number,
-    },
     contact_link: {
         type: String,
         match: [/^(https?:\/\/[^\s$.?#].[^\s]*)$/, 'Please use a valid URL'],
