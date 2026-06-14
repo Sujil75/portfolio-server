@@ -5,7 +5,7 @@ const contactmeSchema = new mongoose.Schema({
         type: String,
         trim: true,
         unique: true,
-        require: true,
+        required: true,
     },
     contact_type: {
         type: String,
@@ -13,7 +13,18 @@ const contactmeSchema = new mongoose.Schema({
     },
     contact_link: {
         type: String,
-        match: [/^(https?:\/\/[^\s$.?#].[^\s]*)$/, 'Please use a valid URL'],
+        validate: {
+            validator: function(value) {
+                const uriRegex = /^https?:\/\/[^\s]+$/i;
+                const mailRegex = /^mailto:[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
+                
+                return (
+                    uriRegex.test(value) ||
+                    mailRegex.test(value)
+                );
+            },
+                message: 'Please provide a valid URL or mailto link'
+        },
         trim: true,
     },
     contact_logo: {
