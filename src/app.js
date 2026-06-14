@@ -8,6 +8,7 @@ const educationRoutes = require('./modules/education/routes/education.routes');
 const projectRoutes = require('./modules/projects/routes/project.routes');
 const contactRoutes = require('./modules/contact/routes/contact.routes');
 const adminRoutes = require('./modules/admin/routes/admin.routes');
+const viewerContactRoutes = require('./modules/viewerContact/routes/viewerContact.routes');
 
 const authMiddleware = require('./middleware/auth.middleware');
 
@@ -15,14 +16,10 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-// app.use(authMiddleware);
-
-// app.get('/', (req, res) => {
-//     res.send("Hello World!");
-// });
 
 // public api
 app.use('/api/portfolio', portfolioRoutes);
+app.use('/api/viewercontact', viewerContactRoutes);
 
 // Admin Auth Routes
 app.use('/api/admin/auth', adminRoutes);

@@ -9,7 +9,11 @@ const userSchema = mongoose.Schema({
         type: String,
         match: [/^(https?:\/\/[^\s$.?#].[^\s]*)$/, 'Please use a valid URL'],
     },
-    user_image: {
+    user_image_home: {
+        type: String,
+        match: [/^(https?:\/\/[^\s$.?#].[^\s]*)$/, 'Please use a valid URL'],
+    },
+    user_image_about: {
         type: String,
         match: [/^(https?:\/\/[^\s$.?#].[^\s]*)$/, 'Please use a valid URL'],
     },
