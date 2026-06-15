@@ -12,7 +12,10 @@ const transporter = nodemailer.createTransport({
 transporter.verify((err, success) => {
     if (err) {
         return new Error('Mail Error');
-    }
+        console.error("Mail transporter not running");
+    } else {
+        console.log("Mail transporter running");
+    };
 });
 
 module.exports = transporter;
