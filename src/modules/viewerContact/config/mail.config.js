@@ -1,22 +1,17 @@
-const nodemailer = require('nodemailer');
+const axios = require('axios');
 require('dotenv').config();
 
-const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
-    auth: {
-        user: process.env.OWNER_EMAIL_USER,
-        pass: process.env.OWNER_EMAIL_PASS,
-    },
+if (!process.env.BREVO_API_KEY) {
+    throw new Error("Brevo Key not received");
+}
+
+const brevoClient = axios.create({
+    baseURL: "https://api.brevo.com/v3/",
+
+    headers: {
+        "api-key": process.env.BREVO_API_KEY,
+        "Content-Type": "application/json"
+    }
 });
 
-transporter.verify((err, success) => {
-    if (err) {
-        console.error("Mail transporter not running", err);
-    } else {
-        console.log("Mail transporter running");
-    };
-});
-
-module.exports = transporter;
+module.exports = brevoClient;
