@@ -19,7 +19,7 @@ app.use(cors());
 
 // public api
 app.use('/api/portfolio', portfolioRoutes);
-app.use('/api/viewercontact', viewerContactRoutes);
+app.use('/api/portfolio/viewercontact', viewerContactRoutes);
 
 // Admin Auth Routes
 app.use('/api/admin/auth', adminRoutes);
