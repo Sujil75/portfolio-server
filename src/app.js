@@ -9,6 +9,7 @@ const projectRoutes = require('./modules/projects/routes/project.routes');
 const contactRoutes = require('./modules/contact/routes/contact.routes');
 const adminRoutes = require('./modules/admin/routes/admin.routes');
 const viewerContactRoutes = require('./modules/viewerContact/routes/viewerContact.routes');
+const viewerContactAdminRoutes = require('./modules/viewerContact/routes/viewerContactAdmin.routes');
 
 const authMiddleware = require('./middleware/auth.middleware');
 
@@ -31,5 +32,6 @@ app.use('/api/admin/skills', skillRoutes);
 app.use('/api/admin/educations', educationRoutes);
 app.use('/api/admin/projects', projectRoutes);
 app.use('/api/admin/contacts', contactRoutes);
+app.use('/api/admin/viewercontact', viewerContactAdminRoutes);
 
 module.exports = app;
