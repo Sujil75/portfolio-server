@@ -25,7 +25,7 @@ const viewContactSchema = mongoose.Schema({
         trim: true,
     }
 }, {
-    Timestamp: true,
+    timestamps: true,
     collection: "viewcontacts",
 });
 
