@@ -6,10 +6,7 @@ const createContact = async data => {
 
     await sendContactMail(data);
 
-    return {
-        message: "Mail Send",
-        data: savedContact,
-    };
+    return savedContact;
 };
 
 const getContact = async () => {

@@ -29,7 +29,7 @@ const sendContactMail = async data => {
 
                     <p><b>Email: </b>${data.mail}</p>
                     
-                    <p><b>Viewer Type: </b>${data.viewer}</p>
+                    <p><b>Viewer Type: </b>${data.type}</p>
 
                     <p><b>Message:</b></p>
 
@@ -40,7 +40,9 @@ const sendContactMail = async data => {
 
         return response.data;
     } catch(err) {
-        throw new Error(err.response?.data);
+        throw new Error(
+            err.response?.data?.message || err.message || "Mail sending failed"
+        );
     };
 };
 
