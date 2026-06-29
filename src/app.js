@@ -12,6 +12,7 @@ const viewerContactRoutes = require('./modules/viewerContact/routes/viewerContac
 const viewerContactAdminRoutes = require('./modules/viewerContact/routes/viewerContactAdmin.routes');
 
 const authMiddleware = require('./middleware/auth.middleware');
+const errMiddleware = require('./middleware/errMiddleware');
 
 const app = express();
 
@@ -33,5 +34,7 @@ app.use('/api/admin/educations', educationRoutes);
 app.use('/api/admin/projects', projectRoutes);
 app.use('/api/admin/contacts', contactRoutes);
 app.use('/api/admin/viewercontact', viewerContactAdminRoutes);
+
+app.use(errMiddleware);
 
 module.exports = app;
