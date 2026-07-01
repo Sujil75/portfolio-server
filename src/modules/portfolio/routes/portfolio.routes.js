@@ -3,17 +3,21 @@ const portfolioServices = require('../service/portfolio.services');
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
     try {
         const data = await portfolioServices.getPortfolio();
 
         if (!data) {
-            return res.status(404).json({ message: 'Portfolio not found' });
+            const err = new Error("Portfolio not found");
+            err.status = 404;
+
+            throw err;
         }
 
         res.json(data);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        err.status = 500;
+        next(err);
     }
 });
 

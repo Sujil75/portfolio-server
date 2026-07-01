@@ -44,14 +44,27 @@ module.exports.createProject = async data => {
 };
 
 module.exports.updateProject = async (id, data) => {
-    if (!id) throw new Error("Invalid ID: ", id);
-    if (!data) throw new Error ("Invalid Data Found");
+    if (!id) {
+        const err = new Error("Invalid ID: ", id);
+        err.status = 404;
+
+        throw err;
+    };
+    if (!data) {
+        const err = new Error("Invalid Request Body");
+        err.status = 404;
+        
+        throw err;
+    };
     
     const existingData = await Projects.find();
     const existingIds = existingData.map(each => each._id.toString());
     
     if (!existingIds.includes(id)) {
-        throw new Error(`Invalid ID: ${id} Found`);
+        const err = new Error(`Invalid ID: ${id} Found`);
+        err.status = 404;
+        
+        throw err;
     };
 
     const updateData = await Projects.findByIdAndUpdate(
@@ -69,14 +82,22 @@ module.exports.updateProject = async (id, data) => {
 };
 
 module.exports.deleteProject = async id => {
-    if (!id) throw new Error("Invalid Project ID: ", id);
-    
-        const existingData = await Projects.find();
-        const existingIds = existingData.map(each => each._id.toString());
+    if (!id) {
+        const err = new Error("Invalid Project ID: ", id);
+        err.status = 404;
         
-        if (!existingIds.includes(id)) {
-            throw new Error(`Invalid ID: ${id} Found`);
-        };
+        throw err;
+    };
+    
+    const existingData = await Projects.find();
+    const existingIds = existingData.map(each => each._id.toString());
+    
+    if (!existingIds.includes(id)) {
+        const err = new Error(`Invalid ID: ${id} Found`);
+        err.status = 404;
+        
+        throw err;
+    };
 
     await Projects.findByIdAndDelete(id);
 

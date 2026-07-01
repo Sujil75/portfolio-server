@@ -1,5 +1,5 @@
 const errMiddleware = (err, req, res, next) => {
-    const status = 500 || err.status;
+    const status = err.status || 500;
 
     if (err.code === 11000) {
         return res.status(409).json({
