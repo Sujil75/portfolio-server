@@ -3,33 +3,31 @@ const userServices = require('../service/user.services');
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
     try {
         const user = await userServices.createUser(req.body);
 
         if (!user) {
-            res.status(401).json({
-                message: "User Details not updated",
-            })
+            const err = new Error("User Details not updated");
+            err.status = 401;
+            
+            throw err;
         };
 
         res.status(200).json({
             message: "User updated successfully",
         });
     } catch(err) {
-        res.status(err.status || 500).json({
-            status: err.status,
-            message: err.message
-        });
+        next(err);
     };
 });
 
-router.put('/', async (req, res) => {
+router.put('/', async (req, res, next) => {
     try {
         const user = await userServices.updateUser(req.body);
         res.json(user);
     }catch(err) {
-        res.status(500).send(err.message);
+        next(err);
     };
 });
 
