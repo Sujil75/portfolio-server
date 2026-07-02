@@ -76,7 +76,12 @@ module.exports.updateProject = async (id, data) => {
         }
     );
 
-    if (!updateData) throw new Error("No Data Updated");
+    if (!updateData) {
+        const err = new Error("No Data Updated");
+        err.status = 404;
+
+        throw err;
+    };
 
     return updateData;
 };

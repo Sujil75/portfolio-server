@@ -37,14 +37,27 @@ module.exports.createContact = async data => {
 };
 
 module.exports.updateContact = async (id, data) => {
-    if (!id) throw new Error("Invalid Id: ", id);
-    if (!data) throw new Error("Invalid Data Received");
+    if (!id) {
+        const err = new Error("Invalid ID: ", id);
+        err.status = 415;
+
+        throw err;
+    };
+    if (!data) {
+        const err = new Error("Invalid Request Body");
+        err.status = 415;
+        
+        throw err;
+    };
     
     const existingData = await ContactMe.find();
     const existingIds = existingData.map(each => each._id.toString());
     
     if (!existingIds.includes(id)) {
-        throw new Error(`Invalid ID: ${id} Found`);
+        const err = new Error("Invalid ID: ", id);
+        err.status = 415;
+
+        throw err;
     };
 
     const updateData = await ContactMe.findByIdAndUpdate(
@@ -56,19 +69,32 @@ module.exports.updateContact = async (id, data) => {
         },
     );
 
-    if (!updateData) throw new Error("No Data Updated");
+    if (!updateData) {
+        const err = new Error("No Data Updated");
+        err.status = 404;
+
+        throw err;
+    };
 
     return updateData;
 };
 
 module.exports.deleteContact = async id => {
-    if (!id) throw new Error("Invalid Id Found: ", id);
+    if (!id) {
+        const err = new Error("Invalid ID: ", id);
+        err.status = 415;
+
+        throw err;
+    };
 
     const existingData = await ContactMe.find();
     const existingIds = existingData.map(each => each._id.toString());
     
     if (!existingIds.includes(id)) {
-        throw new Error(`Invalid ID: ${id} Found`);
+        const err = new Error("Invalid ID: ", id);
+        err.status = 400;
+
+        throw err;
     };
 
     await ContactMe.findByIdAndDelete(id);
