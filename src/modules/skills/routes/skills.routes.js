@@ -3,40 +3,46 @@ const skillsServices = require('../service/skills.services');
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
     try {
         const skill = await skillsServices.createSkills(req.body);
         res.json(skill);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        next(err);
     }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', async (req, res, next) => {
     try {
         const skill = await skillsServices.updateSkill(req.params.id, req.body);
 
         if (!skill) {
-            return res.status(404).json({ message: 'Skill not found' });
+            const err = new Error('Skill not found');
+            err.status = 404;
+            
+            throw err;
         }
 
         res.json(skill);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        next(err);
     }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res, next) => {
     try {
         const skill = await skillsServices.deleteSkill(req.params.id); // ✅ FIXED
 
         if (!skill) {
-            return res.status(404).json({ message: 'Skill not found' });
+            const err = new Error('Skill not found');
+            err.status = 404;
+            
+            throw err;
         }
 
         res.json({ message: "Skill Deleted" });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        next(err);
     }
 });
 

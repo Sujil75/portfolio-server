@@ -46,13 +46,13 @@ module.exports.createProject = async data => {
 module.exports.updateProject = async (id, data) => {
     if (!id) {
         const err = new Error("Invalid ID: ", id);
-        err.status = 404;
+        err.status = 415;
 
         throw err;
     };
     if (!data) {
         const err = new Error("Invalid Request Body");
-        err.status = 404;
+        err.status = 415;
         
         throw err;
     };
