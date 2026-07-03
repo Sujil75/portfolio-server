@@ -47,14 +47,27 @@ module.exports.createEdu = async data => {
 }
 
 module.exports.updateEdu = async (id, data) => {
-    if (!id) throw new Error("Invalid Id: ", id);
-    if (!data) throw new Error("Invalid Data Received");
+    if (!id) {
+        const err = new Error("Invalid ID: ", id);
+        err.status = 415;
+
+        throw err;
+    };
+    if (!data) {
+        const err = new Error("Invalid Request Body");
+        err.status = 415;
+        
+        throw err;
+    };
     
     const existingData = await Education.find();
     const existingIds = existingData.map(each => each._id.toString());
     
     if (!existingIds.includes(id)) {
-        throw new Error(`Invalid ID: ${id} Found`);
+        const err = new Error(`Invalid ID: ${id} Found`);
+        err.status = 404;
+        
+        throw err;
     };
 
     const updateEducation = await Education.findByIdAndUpdate(
@@ -66,22 +79,33 @@ module.exports.updateEdu = async (id, data) => {
         },
     );
 
-    if (!updateEducation) throw new Error("No Data Updated");
+    if (!updateEducation) {
+        const err = new Error("No Data Updated");
+        err.status = 404;
+
+        throw err;
+    };
 
     return updateEducation;
 };
 
 module.exports.deleteEdu = async id => {
-    if (!id) throw new Error(`No data found or empty`);
+    if (!id) {
+        const err = new Error("Invalid ID: ", id);
+        err.status = 415;
+
+        throw err;
+    };
     
     const existingData = await Education.find();
     const existingIds = existingData.map(each => each._id.toString());
     
     if (!existingIds.includes(id)) {
-        throw new Error(`Invalid ID: ${id} Found`);
+        const err = new Error(`Invalid ID: ${id} Found`);
+        err.status = 404;
+        
+        throw err;
     };
-
-    console.log(id);
 
 
     await Education.findByIdAndDelete(id);

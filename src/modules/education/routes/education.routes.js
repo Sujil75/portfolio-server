@@ -9,7 +9,7 @@ const {
     deleteEdu,
 } = eduServices;
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
     try {
         const education = await createEdu(req.body);
         res.json({
@@ -17,18 +17,19 @@ router.post('/', async (req, res) => {
             data: education,
         });
     }catch(err) {
-        res.status(500).send(err.message);
+        next(err);
     };
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', async (req, res, next) => {
     try {
         const education = await updateEdu(req.params.id, req.body);
 
         if (!education) {
-            return res
-                    .status(404)
-                    .send(`No education with id: ${req.params.id} found`);
+            const err = new Error(`No education with id: ${req.params.id} found`);
+            err.status = 404;
+            
+            throw err;
         }
 
         res.json({
@@ -36,25 +37,26 @@ router.put('/:id', async (req, res) => {
             data: education
         });
     }catch(err) {
-        res.status(500).send(err.message);
+        next(err);
     };
 });
 
-router.delete('/:id', async (req,res) => {
+router.delete('/:id', async (req,res, next) => {
     try {
         const education = await deleteEdu(req.params.id);
 
         if (!education) {
-            return res
-                .status(404)
-                .send(`No education with id: ${req.params.id} found`);
+            const err = new Error(`No education with id: ${req.params.id} found`);
+            err.status = 404;
+            
+            throw err;
         }
 
         res.json({
             message: education,
         });
     }catch(err) {
-        res.status(500).json({message: err.message});
+        next(err);
     };
 });
 
