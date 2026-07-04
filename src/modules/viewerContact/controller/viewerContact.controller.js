@@ -4,7 +4,7 @@ const {
     deleteContact,
 } = require('../service/viewerContact.services');
 
-const submitContact = async (req, res) => {
+const submitContact = async (req, res, next) => {
     try {
         // console.log("CONTENT-TYPE:", req.headers["content-type"]);
         // console.log("BODY:", req.body);
@@ -24,41 +24,29 @@ const submitContact = async (req, res) => {
             message: "Mail Send Successfully"
         });
     } catch(err) {
-        if (err.code === 11000) {
-            return res.status(400).json({
-                message: "Contact already exists (duplicate entry)"
-            })
-        }
+        err.code = 11000;
 
-        return res.status(err.status || 500).json({
-            message: err.message,
-        })
+        next(err);
     }
 };
 
-const getViewersContact = async (req, res) => {
+const getViewersContact = async (req, res, next) => {
     try {
         const viewerContact = await getContact();
 
         return res.status(200).send(viewerContact);
     } catch (err) {
-        return res.status(err.status || 500).json({
-            status: err.status,
-            message: err.message,
-        });
+        next(err);
     };
 }
 
-const deleteViewerContact = async (req, res) => {
+const deleteViewerContact = async (req, res, next) => {
     try {
         const viewerContact = await deleteContact(req.params.id);
 
         return res.status(200).send(viewerContact);
     } catch (err) {
-        return res.status(err.status || 500).json({
-            status: err.status,
-            message: err.message,
-        })
+        next(err);
     }
 }
 
