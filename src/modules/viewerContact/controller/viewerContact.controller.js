@@ -11,9 +11,10 @@ const submitContact = async (req, res, next) => {
         const data = req.body;
 
         if (Object.keys(data).length === 0) {
-            return res.status(400).json({
-                message: "Request body missing"
-            });
+            const err = new Error("Request body missing");
+            err.status = 400;
+
+            throw err;
         };
 
         // console.log(data);
