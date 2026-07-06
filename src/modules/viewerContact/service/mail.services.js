@@ -40,9 +40,18 @@ const sendContactMail = async data => {
 
         return response.data;
     } catch(err) {
-        throw new Error(
-            err.response?.data?.message || err.message || "Mail sending failed"
+        // throw new Error(
+        //     err.response?.data?.message || err.message || "Mail sending failed"
+        // );
+
+        const error = new Error(
+            err.response?.data?.message || 
+            err.message || 
+            "Mail sending failed"
         );
+        error.status = err.status || 400;
+
+        throw error;
     };
 };
 
