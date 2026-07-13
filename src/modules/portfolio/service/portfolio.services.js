@@ -12,13 +12,12 @@ const getPortfolio = async () => {
 
     return {
         name: user.name,
-        email: user.email,
-        phone: user.phone,
-        role: user.role,
         description: user.description,
         brief_description: user.brief_description,
+        role: user.role,
         resume: user.resume,
-        user_image: user.user_image,
+        user_image_home: user.user_image_home,
+        user_image_about: user.user_image_about,
         skills: (user.skills || [])/* .sort(
             (a, b) => b.skill_progress - a.skill_progress
         ) */,
