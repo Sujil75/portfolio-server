@@ -7,7 +7,7 @@ const createSkills = async (data) => {
     // normalize
     const normalized = dataArray.map(s => ({
         ...s,
-        skill_name: s.skill_name.toLowerCase()
+        skill_name: s.skill_name
     }));
 
     // check duplicates in input
