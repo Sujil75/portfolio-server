@@ -2,49 +2,58 @@ const Education = require('../model/education.model');
 const User = require('../../user/model/user.model');
 
 module.exports.createEdu = async data => {
-    // get user data
-    const dataArray = Array.isArray(data) ? data : [data];
+    const dataArray = Array.isArray(data)
+        ? data
+        : [data];
 
-    // normalize user data
-    const normalizedData = dataArray.map(each => each.education_name.trim().toLowerCase());
+    // Get all education names
+    const names = dataArray.map(each => each.name);
 
-    // get existing data
-    const existingData = await Education.find({
-        "education_name": {$in: normalizedData}
+    // Find existing education
+    const existingEducation = await Education.find({
+        name: { $in: names }
     });
 
-    // get education names from existing data
+    // Existing names
     const existingNames = new Set(
-        existingData.map(each => 
-            each.education_name.trim().toLowerCase()
-        )
+        existingEducation.map(each => each.name)
     );
 
-    // filter data removing duplicates
-    const filteredData = dataArray.filter(each => 
-        !existingNames.has(each.education_name.trim().toLowerCase())
+    // Remove duplicates
+    const filteredData = dataArray.filter(
+        each => !existingNames.has(each.name)
     );
 
-    // normalize before insert
-    const formattedData = filteredData.map(each => ({
-        ...each,
-        education_name: each.education_name.trim().toLowerCase(),
-    }));
+    // Nothing new to insert
+    if (filteredData.length === 0) {
+        const err = new Error("No Data Found");
+        err.status = 404;
 
-    // new education data
-    const createdData = await Education.create(formattedData);
+        throw err;
+    }
 
-    // get education ids for user collection
-    const eduIds = createdData.map(each => each._id);
+    // Create education
+    const createdEducation =
+        await Education.create(filteredData);
 
-    // push into user collection
+    // Extract ids
+    const educationIds =
+        createdEducation.map(each => each._id);
+
+    // Add ids to user
     await User.updateMany(
         {},
-        {$push: {educations: {$each: eduIds}}},
+        {
+            $push: {
+                educations: {
+                    $each: educationIds,
+                },
+            },
+        }
     );
 
-    return createdData;
-}
+    return createdEducation;
+};
 
 module.exports.updateEdu = async (id, data) => {
     if (!id) {
