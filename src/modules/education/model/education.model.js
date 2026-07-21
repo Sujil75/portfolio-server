@@ -5,6 +5,10 @@ const eduSchema = new mongoose.Schema({
         type: String,
         match: [/^(https?:\/\/[^\s$.?#].[^\s]*)$/, 'Please use a valid URL']
     },
+    drive_link: {
+        type: String,
+        match: [/^(https?:\/\/[^\s$.?#].[^\s]*)$/, 'Please use a valid URL']
+    },
     name: {
         type: String,
         required: true,
