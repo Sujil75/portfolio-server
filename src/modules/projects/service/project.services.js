@@ -2,9 +2,16 @@ const Projects = require('../model/project.model');
 const User = require('../../user/model/user.model');
 
 module.exports.createProject = async data => {
+    if (!data) {
+        const err = new Error("No Data Found");
+        err.status = 404;
+
+        throw err;
+    }
+
     const dataArray = Array.isArray(data) ? data : [data];
 
-    const normalizedData = dataArray.map(each => each.project_name.trim());
+    const normalizedData = dataArray.map(each => each.project_name);
 
     const existingData = await Projects.find({
         project_name: {$in: normalizedData},
@@ -12,19 +19,19 @@ module.exports.createProject = async data => {
 
     const existingNames = new Set(
         existingData.map(each => (
-            each.project_name.trim()
+            each.project_name
         ))
     );
 
     const filteredData = dataArray.filter(each =>
         !existingNames.has(
-            each.project_name.trim()
+            each.project_name
         )
     );
 
     const formattedData = filteredData.map(each => ({
         ...each,
-        project_name: each.project_name.trim(),
+        project_name: each.project_name,
     }));
 
     if (formattedData.length === 0) {

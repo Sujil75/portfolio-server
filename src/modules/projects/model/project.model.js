@@ -1,39 +1,43 @@
 const mongoose = require('mongoose');
 
 const projectsSchema = new mongoose.Schema({
-    project_img: {
+    image: {
         type: String,
         match: [/^(https?:\/\/[^\s$.?#].[^\s]*)$/, 'Please use a valid URL'],
         trim: true,
     },
-    project_publish_link: {
-        type: String,
-        match: [/^(https?:\/\/[^\s$.?#].[^\s]*)$/, 'Please use a valid URL'],
-        trim: true,
-    },
-    project_name: {
+    name: {
         type: String,
         required: true,
         trim: true,
     },
-    project_brief: {
+    brief_desc: {
         type: String,
         trim: true,
         maxlength: 200,
     },
-    project_desc: {
+    desc: {
         type: String,
         trim: true,
     },
-    project_stacks: [{
+    tech_stacks: [{
         type: String,
-        // lowercase: true,
         trim: true,
         minlength: 1,
         maxlength: 30,
-    }, {
-        timestamps: true,
     }],
+    publish_link: {
+        type: String,
+        match: [/^(https?:\/\/[^\s$.?#].[^\s]*)$/, 'Please use a valid URL'],
+        trim: true,
+    },
+    github_link: {
+        type: String,
+        match: [/^(https?:\/\/[^\s$.?#].[^\s]*)$/, 'Please use a valid URL'],
+        trim: true,
+    },
+}, {
+    timestamps: true,
 });
 
 const Projects = mongoose.model('Projects', projectsSchema);

@@ -2,6 +2,13 @@ const Skills = require('../model/skills.model');
 const User = require('../../user/model/user.model');
 
 const createSkills = async (data) => {
+    if (!data) {
+        const err = new Error("No Data Found");
+        err.status = 404;
+
+        throw err;
+    }
+    
     const dataArray = Array.isArray(data) ? data : [data];
 
     // normalize

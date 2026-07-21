@@ -2,6 +2,13 @@ const ContactMe = require('../model/contact.model');
 const User = require('../../user/model/user.model');
 
 module.exports.createContact = async data => {
+    if (!data) {
+        const err = new Error("No Data Found");
+        err.status = 404;
+
+        throw err;
+    }
+    
     const dataArray = Array.isArray(data) ? data : [data];
     
     // get names from the array

@@ -26,7 +26,7 @@ const eduSchema = new mongoose.Schema({
     },
 }, {
     timestamps: true,
-})
+});
 
 const eduModel = mongoose.model('Education', eduSchema);
 
